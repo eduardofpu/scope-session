@@ -31,7 +31,7 @@ mvn clean
 Istala o jar ou war
 mvn clean install
 
-Ob: caso esteja utilizando o docker: execute esse comando no prompt dentro da pasta do projeto
+Ob: caso esteja utilizando o docker: execute esse comando no prompt dentro da pasta do projeto.
 docker-compose up
 
 Agora e so iniciar o projeto por uma IDE ou execute o comando no prompt dentro da pasta do projeto.
