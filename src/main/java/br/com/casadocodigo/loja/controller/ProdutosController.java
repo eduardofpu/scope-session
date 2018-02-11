@@ -25,6 +25,13 @@ import br.com.casadocodigo.loja.validation.ProdutoValidation;
 @Controller
 @RequestMapping("/produtos")
 public class ProdutosController {
+
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		
+		binder.addValidators(new ProdutoValidation());
+		 
+	}
 	
 	@Autowired
 	private ProdutoDao produtoDao;
@@ -32,12 +39,6 @@ public class ProdutosController {
 	@Autowired
 	private FileSaver fileSaver;
 	
-	@InitBinder
-	public void initBinder(WebDataBinder binder) {
-		
-		binder.addValidators(new ProdutoValidation());
-		 
-	}
 	
 	@RequestMapping("/form")
 	public ModelAndView form(Produto produto) {
@@ -52,9 +53,6 @@ public class ProdutosController {
 	public ModelAndView grava(MultipartFile sumario, @Valid Produto produto,
 			BindingResult result, RedirectAttributes redirectAttributes) {
 		
-		//Pega o nome original do arquivo
-		System.out.println(sumario.getOriginalFilename());
-		
 		
 		if(result.hasErrors()) {
 			return form(produto);
@@ -63,8 +61,11 @@ public class ProdutosController {
 		
 		System.out.println(produto);
 		
-		String path = fileSaver.write("sumario", sumario);
-		produto.setSumarioPath(path);
+		String sumarioPath = fileSaver.write("sumario", sumario);
+		produto.setSumarioPath(sumarioPath);
+		
+		//Pega o nome original do arquivo
+				System.out.println(sumario.getOriginalFilename());
 		
 		produtoDao.gravar(produto);
 		redirectAttributes.addFlashAttribute("sucesso", "Produto cadastrado com sucesso!");

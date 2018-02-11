@@ -1,7 +1,7 @@
 package br.com.casadocodigo.loja.infra;
 
 import java.io.File;
-
+import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class FileSaver {
 	            //pasta e nome do arquivo
 	            return baseFolder + "/" + file.getOriginalFilename();
 
-	        } catch (Exception e) {
+	        } catch (IllegalStateException | IOException e) {
 	            throw new RuntimeException(e);    
 	        }
 
